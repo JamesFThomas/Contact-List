@@ -8,12 +8,17 @@ const connectDB = require('./config/db')
 // invoke conncetDB() to create connection to mongoDB
 connectDB();
 
+// Initialize middleware to parse body data in json format
+app.use(express.json({ extended:false }));
+
+
+                                                                                   // Routes
+
 // Home
 app.get('/', (req, res)=>{
   res.json({ msg:'Welcome to the ContactList API...' })}
 );
-
-// Routes
+// Routers
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/contacts', require('./routes/contacts'));
