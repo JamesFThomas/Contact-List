@@ -4,14 +4,15 @@ const express = require('express');
 // create new instance of express in this project
 const app = express();
 
-
-                                          // -----  Routes  ----- //
-
-// 1. Home
+// Home
 app.get('/', (req, res)=>{
   res.json({ msg:'Welcome to the ContactList API...' })}
 );
 
+// Routes
+app.use('/api/users', require('./routes/users'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/contacts', require('./routes/contacts'));
 
 
 // create variable set to PORT value for dev & production
