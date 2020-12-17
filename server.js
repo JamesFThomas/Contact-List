@@ -1,8 +1,12 @@
 // common JS syntax to import modules into file
 const express = require('express');
-
 // create new instance of express in this project
 const app = express();
+// import connectDB function
+const connectDB = require('./config/db')
+
+// invoke conncetDB() to create connection to mongoDB
+connectDB();
 
 // Home
 app.get('/', (req, res)=>{
