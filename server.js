@@ -23,5 +23,5 @@ app.use('/api/contacts', require('./routes/contacts'));
 const PORT = process.env.PORT || 5000;
 
 // create listen function to direct server to monitor particular port + connection message
-app.listen( PORT, () => console.log(`Server listening on port ${PORT}`));
+app.listen( PORT, () => console.log(`Server listening on port ${PORT}...`));
 

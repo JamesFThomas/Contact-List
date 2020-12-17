@@ -1,0 +1,25 @@
+// import mongoose package
+const mongoose = require('mongoose')
+// create variable set to new user Schema properties
+const UserSchema = mongoose.Schema({
+  name:{
+    type: String,
+    required: true
+  },
+  email:{
+    type: String,
+    required: true,
+    unique: true
+  },
+  password:{
+    type: String,
+    required: true,
+  },
+  date:{
+    type: Date,
+    default: Date.now
+  }
+})
+
+// export model for the user schema in order to use definition for data entry
+module.exports = mongoose.model('user', UserSchema);
