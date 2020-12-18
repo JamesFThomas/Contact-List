@@ -83,7 +83,7 @@ async (req, res)=>{
 
       // Sign the web token to finish creation process
       jwt.sign(payload, config.get('jwtSecret'), {
-        // set experiesIn prop to destroy token in set duration
+        // set length of time before token is destroyed ending session
         expiresIn: 360000
       }, ( error, token ) => {
         // If error signing token throw error
