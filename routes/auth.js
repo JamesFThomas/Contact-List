@@ -18,9 +18,24 @@ const { check, validationResult } = require('express-validator');
 // @route   GET api/auth
 // @desc    Get a logged in user
 // @access  Private
-router.get('/', auth, (req, res)=>{
-  res.send('Get logged in user')
+router.get('/', 
+  // Include auth() middleware function to validate web token
+  auth,
+  // Create promises to await valid user information for session
+  async (req, res)=>{
+  try {
+    // Create variable set to return response search for User data by id
+    const user = await User.findById(req.user.id).select('-password');
+    // Return user data once found in DB without password
+    res.json(user);
+
+  // Respond with Error messages
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error')
+  }
 });
+
 
 
 // @route   POST api/auth

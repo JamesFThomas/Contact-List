@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
   try {
     // Create variable set to return response of verifying token
     const decoded = jwt.verify(token, config.get('jwtSecret'));
-    // Set user value on request object to verified decoded user data
+    // Set user value on request object to verified decoded user id
     req.user = decoded.user;
     // Move to next function in middleware chain
     next();

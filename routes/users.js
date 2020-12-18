@@ -31,6 +31,7 @@ router.post('/',
       min: 6
     })
 ],
+// Create promises to await returned values to confirm valid user data
 async (req, res)=>{
   const errors = validationResult(req);
   if(!errors.isEmpty()){
@@ -91,6 +92,7 @@ async (req, res)=>{
           else { res.json({ token })}
         })
 
+    // Respond with error messages
     } catch (error) {
       console.error(error.message)
       res.status(500).send('Server Error')
