@@ -10,15 +10,18 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 // import config package to use variables from default.json file
 const config = require('config');
+// import authorization middleware function to protect routes
+const auth = require('../middleware/auth')
 //import Express validator package functions to check for desired information in data transmitted via users routes
 const { check, validationResult } = require('express-validator');
 
 // @route   GET api/auth
 // @desc    Get a logged in user
 // @access  Private
-router.get('/', (req, res)=>{
+router.get('/', auth, (req, res)=>{
   res.send('Get logged in user')
 });
+
 
 // @route   POST api/auth
 // @desc    Authorize user and GET token
