@@ -71,26 +71,25 @@ async (req, res)=>{
       // Save new User model in DB
       await user.save();
 
-      // Confirm new User model saved in db
-      // res.send('New User Saved');
+      // Authorize user session by creating & sending json web token
 
-      // Create payload to send with json web token, only user_id
-      const payload = {
-        user: {
-          id: user.id
-        }
-      };
+        // Create payload to send with json web token, only user_id
+        const payload = {
+          user: {
+            id: user.id
+          }
+        };
 
-      // Sign the web token to finish creation process
-      jwt.sign(payload, config.get('jwtSecret'), {
-        // set length of time before token is destroyed ending session
-        expiresIn: 360000
-      }, ( error, token ) => {
-        // If error signing token throw error
-        if(error) { throw error; }
-        // Else return new token for user authorization
-        else { res.json({ token })}
-      })
+        // Sign the web token to finish creation process
+        jwt.sign(payload, config.get('jwtSecret'), {
+          // set length of time before token is destroyed ending session
+          expiresIn: 360000
+        }, ( error, token ) => {
+          // If error signing token throw error
+          if(error) { throw error; }
+          // Else return new token for user authorization
+          else { res.json({ token })}
+        })
 
     } catch (error) {
       console.error(error.message)
