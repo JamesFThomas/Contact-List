@@ -1,3 +1,3 @@
 {
-  "mongoURI": "mongodb+srv://jamesfthomas:Eldorado1@contactkeeper.uxavr.mongodb.net/ContactKeeper?retryWrites=true&w=majority" 
+  "mongoURI": "mongodb+srv://jamesfthomas:Eldorado1@contactkeeper.uxavr.mongodb.net/ContactKeeper?retryWrites=true&w=majority"
 }
