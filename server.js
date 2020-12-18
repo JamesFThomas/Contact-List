@@ -8,12 +8,17 @@ const connectDB = require('./config/db')
 // invoke conncetDB() to create connection to mongoDB
 connectDB();
 
+// Initialize middleware to parse body data in json format
+app.use(express.json({ extended:false }));
+
+
+                                                                                   // Routes
+
 // Home
 app.get('/', (req, res)=>{
   res.json({ msg:'Welcome to the ContactList API...' })}
 );
-
-// Routes
+// Routers
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/contacts', require('./routes/contacts'));
@@ -23,5 +28,5 @@ app.use('/api/contacts', require('./routes/contacts'));
 const PORT = process.env.PORT || 5000;
 
 // create listen function to direct server to monitor particular port + connection message
-app.listen( PORT, () => console.log(`Server listening on port ${PORT}`));
+app.listen( PORT, () => console.log(`Server listening on port ${PORT}...`));
 

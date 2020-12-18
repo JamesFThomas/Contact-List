@@ -15,7 +15,7 @@ const connectDB = () => {
     useUnifiedTopology: true
   } )
   .then(() => {
-    console.log('Release The Mongeese');
+    console.log('Release The Mongeese...');
   })
   .catch((err) => {
     console.error(err.message);
