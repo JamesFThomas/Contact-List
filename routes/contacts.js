@@ -88,8 +88,47 @@ router.post('/',
 // @route   PUT api/contacts
 // @desc    Update contact information on list
 // @access  Private
-router.put('/:id', (req, res)=>{
-  res.send("Update contact information on a user's list")
+router.put('/:id', auth, async (req, res)=>{
+  // Deconstruct contact information from request object
+  const { email, name, phone, type } = req.body;
+
+  // Build contact object to hold values to be updated
+  const contactFields = {};
+  // Assign transmitted data to appropriate contactFields prop
+  if(name) contactFields.name = name;
+  if(email) contactFields.email = email;
+  if(phone) contactFields.phone = phone;
+  if(type) contactFields.type = type;
+
+  try {
+    //create variable set to return value of finding by user id
+    let contact = await Contact.findById(req.params.id)
+
+    // If contact not found by user id return error
+    if(!contact) return res.status(404).json({ msg: 'Contact not found' })
+
+    // Ensure that current user owners the contact attempting to update
+    if(contact.user.toString() !== req.user.id){
+      // Return error message if not owner of contact
+      return res.status(401).json({ msg: 'Not authorized' })
+    }
+
+    // If contact found by user id update persisted contact information
+    contact = await Contact.findByIdAndUpdate(req.params.id,
+      // Update contact information with values in contactFields object
+      { $set: contactFields },
+      { new: true}
+    );
+
+    // Return Updated Contact Information
+    res.json(contact)
+
+  // Handle error messages
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Server Error')
+  }
+
 });
 
 // @route   DELETE api/contacts
