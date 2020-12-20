@@ -1,7 +1,7 @@
 // Import React package with useReducer hook
 import React, { useReducer } from 'react';
 // Import uuid package to create custom ids
-import uuid from 'uuid';
+import {v4 as uuid} from 'uuid';
 // Import contact context instance
 import ContactContext from './contactContext';
 // Import contact context reduce function to update state values
@@ -48,7 +48,11 @@ const ContactState = (props) => {
 
                                             // Contact State Actions
 
-    // ADD a contact,
+    // ADD a contact
+    const addContact = contact =>{
+      contact.id = uuid();
+      dispatch({ type: ADD_CONTACT, payload: contact })
+    };
     // DELETE a contact,
     // SET the current contact,
     // UPDATE the contact,
@@ -60,7 +64,8 @@ const ContactState = (props) => {
       <ContactContext.Provider
         // Set contact state & actions for access in app components
         value={{
-          contacts: state.contacts
+          contacts: state.contacts,
+          addContact
         }}
         >
           {props.children}
