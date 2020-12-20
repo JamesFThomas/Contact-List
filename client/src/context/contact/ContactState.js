@@ -54,6 +54,10 @@ const ContactState = (props) => {
       dispatch({ type: ADD_CONTACT, payload: contact })
     };
     // DELETE a contact,
+    const deleteContact = id =>{
+      dispatch({ type: DELETE_CONTACT, payload: id })
+    };
+
     // SET the current contact,
     // UPDATE the contact,
     // FILTER contacts
@@ -65,7 +69,8 @@ const ContactState = (props) => {
         // Set contact state & actions for access in app components
         value={{
           contacts: state.contacts,
-          addContact
+          addContact,
+          deleteContact
         }}
         >
           {props.children}

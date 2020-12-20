@@ -1,11 +1,25 @@
 // Import React package
-import React from 'react'
-// IMport
+import React, { useContext } from 'react'
+// Import propTypes package
 import PropTypes from 'prop-types';
+// Import ContactContext state
+import ContactContext from '../../context/contact/contactContext';
+
 
 const ContactItem = ({ contact }) => {
+  // Initialize contact context to manipulate contact state
+  const contactContext = useContext(ContactContext)
+
+  // Deconstruct deleteContact action from contactContext
+  const { deleteContact } = contactContext
+
   // Deconstruct contact information from props
   const { id, name, email, phone, type } = contact;
+
+  // Function will delete user contact from list
+  const onDelete = () =>{
+    deleteContact(id);
+  };
 
   return (
     <div className='card bg-light'>
@@ -30,7 +44,7 @@ const ContactItem = ({ contact }) => {
       </ul>
       <p>
         <button className='btn btn-dark btn-sm'> Edit </button>
-        <button className='btn btn-danger btn-sm'> Delete </button>
+        <button className='btn btn-danger btn-sm' onClick={onDelete}> Delete </button>
       </p>
     </div>
   )
