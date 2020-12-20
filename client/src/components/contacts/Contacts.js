@@ -1,5 +1,7 @@
 // Import React package and methods
 import React, { Fragment, useContext} from 'react';
+// Import ContactItem component to display contact info
+import ContactItem from './ContactItem'
 // Import contact context to access state globally
 import ContactContext from '../../context/contact/contactContext';
 
@@ -14,7 +16,7 @@ export const Contacts = () => {
   return (
     <Fragment>
       {contacts.map((contact) => (
-        <h3>{contact.name}</h3>
+        < ContactItem key={contact.id} contact={contact}/>
       ))}
     </Fragment>
   )
