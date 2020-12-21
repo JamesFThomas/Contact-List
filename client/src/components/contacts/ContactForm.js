@@ -46,13 +46,18 @@ const ContactForm = () => {
 
   // Function to update global Application state with form values
   const onSubmit =(e)=>{
+    // prevent fields from whipping input values
     e.preventDefault();
+    // Check the value of the "current" key in contact context
     if( current === null){
+      // if value is null, invoke addContact() to persist contact information
       addContact(contact);
     }
     else {
+      // if value !null, invoke updateContact() to alter persisted contacts information
       updateContact(contact);
     }
+    // reset form fields to initial state, " "
     clearAll();
   };
 

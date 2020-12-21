@@ -13,7 +13,8 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_CONTACT,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  FILTER_CONTACTS
 } from '../types';
 
 const ContactState = (props) => {
@@ -42,7 +43,9 @@ const ContactState = (props) => {
       }
     ],
     // Will serve as a space to hold contacts made in UI
-    current: null
+    current: null,
+    // An array to hold filtered contacts from list displaying
+    filtered: null
   };
 
   // Initialize useReducer hook to access contacts state values
@@ -76,6 +79,14 @@ const ContactState = (props) => {
     };
 
     // FILTER contacts
+    const filterContacts = text =>{
+      dispatch({ type: FILTER_CONTACTS, payload: text })
+    };
+
+    // Clear Filter
+    const clearFilter = () =>{
+      dispatch({ type: CLEAR_FILTER })
+    };
 
     // Return contact context provider element
     return (
@@ -84,11 +95,14 @@ const ContactState = (props) => {
         value={{
           contacts: state.contacts,
           current: state.current,
+          filtered: state.filtered,
           addContact,
           deleteContact,
           setCurrent,
           clearCurrent,
-          updateContact
+          updateContact,
+          filterContacts,
+          clearFilter
         }}
         >
           {props.children}
