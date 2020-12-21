@@ -1,5 +1,8 @@
 // Import React package and methods
 import React, { Fragment, useContext} from 'react';
+// Import transition animation package for additional UI effects
+import {CSSTransition, TransitionGroup } from 'react-transition-group';
+
 // Import ContactItem component to display contact info
 import ContactItem from './ContactItem'
 // Import contact context to access state globally
