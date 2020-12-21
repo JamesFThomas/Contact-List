@@ -9,15 +9,24 @@ export const Contacts = () => {
   // Initiate contact context in the component to access contact state variables/methods
   const contactContext = useContext(ContactContext);
 
-  // Deconstruct state variable from contact context
-  const { contacts } = contactContext;
+  // Deconstruct state actions/variables from contact context
+  const { contacts, filtered } = contactContext;
 
+  // Conditional message prompting user to enter contact if none are persisted
+  if(!contacts.length){
+    return <h4> PLease enter a contact</h4>
+  }
 
   return (
     <Fragment>
-      {contacts.map((contact) => (
-        < ContactItem key={contact.id} contact={contact}/>
-      ))}
+      {/* Conditionally render filtered contacts array based on contact state "filtered" key value */}
+      {filtered !== null
+        ? filtered.map(contact => (
+          < ContactItem key={contact.id} contact={contact}/>
+          ))
+        : contacts.map((contact) => (
+          < ContactItem key={contact.id} contact={contact}/>
+        ))}
     </Fragment>
   )
 }
