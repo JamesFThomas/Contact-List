@@ -1,7 +1,7 @@
 // Import React package with useReducer hook
 import React, { useReducer } from 'react';
 // Import uuid package to create custom ids
-import uuid from 'uuid';
+import {v4 as uuid} from 'uuid';
 // Import contact context instance
 import ContactContext from './contactContext';
 // Import contact context reduce function to update state values
@@ -13,7 +13,8 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_CONTACT,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  FILTER_CONTACTS
 } from '../types';
 
 const ContactState = (props) => {
@@ -40,7 +41,11 @@ const ContactState = (props) => {
         phone: '333-333-3333',
         type: 'professional'
       }
-    ]
+    ],
+    // Will serve as a space to hold contacts made in UI
+    current: null,
+    // An array to hold filtered contacts from list displaying
+    filtered: null
   };
 
   // Initialize useReducer hook to access contacts state values
@@ -48,19 +53,56 @@ const ContactState = (props) => {
 
                                             // Contact State Actions
 
-    // ADD a contact,
+    // ADD a contact
+    const addContact = contact =>{
+      contact.id = uuid();
+      dispatch({ type: ADD_CONTACT, payload: contact })
+    };
     // DELETE a contact,
-    // SET the current contact,
+    const deleteContact = id =>{
+      dispatch({ type: DELETE_CONTACT, payload: id })
+    };
+
+    // FUNCTION - will SET a contact as the value of the "current" state key for editing
+    const setCurrent = contact =>{
+      dispatch({ type: SET_CURRENT, payload: contact })
+    };
+
+    // FUNCTION - will CLEAR a contact as the "current" key value and set it back to null
+    const clearCurrent = () =>{
+      dispatch({ type: CLEAR_CURRENT })
+    };
+
     // UPDATE the contact,
+    const updateContact = contact =>{
+      dispatch({ type: UPDATE_CONTACT, payload: contact })
+    };
+
     // FILTER contacts
-    // CLEAR the filter
+    const filterContacts = text =>{
+      dispatch({ type: FILTER_CONTACTS, payload: text })
+    };
+
+    // Clear Filter
+    const clearFilter = () =>{
+      dispatch({ type: CLEAR_FILTER })
+    };
 
     // Return contact context provider element
     return (
       <ContactContext.Provider
         // Set contact state & actions for access in app components
         value={{
-          contacts: state.contacts
+          contacts: state.contacts,
+          current: state.current,
+          filtered: state.filtered,
+          addContact,
+          deleteContact,
+          setCurrent,
+          clearCurrent,
+          updateContact,
+          filterContacts,
+          clearFilter
         }}
         >
           {props.children}
