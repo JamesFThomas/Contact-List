@@ -2,6 +2,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 // Import contact conetext tp access contact state globally
 import ContactContext from '../../context/contact/contactContext';
+import { CLEAR_CURRENT } from '../../context/types';
 
 
 const ContactForm = () => {
@@ -9,7 +10,19 @@ const ContactForm = () => {
   const contactContext = useContext(ContactContext);
 
   // Destructor functions from contactContext
-  const { addContact, current } = contactContext;
+  const { addContact, current, clearCurrent } = contactContext;
+
+  // Initialize useState hook and variables
+   // Setting a form in the useState() hook allows us not to have to create hook for each form field
+  const [contact, setContact] = useState({
+    name:'',
+    email:'',
+    phone:'',
+    type:'personal',
+  })
+
+  // Destruct form fields from contact variable in useState hook
+  const { name, email, phone, type } = contact;
 
   // React hook will automatically load contact information to form based on "current" value
   useEffect(()=>{
@@ -26,17 +39,10 @@ const ContactForm = () => {
     }
   }, [contactContext, current]);
 
-  // Initialize useState hook and variables
-   // Setting a form in the useState() hook allows us not to have to create hook for each form field
-  const [contact, setContact] = useState({
-    name:'',
-    email:'',
-    phone:'',
-    type:'personal',
-  })
-
-  // Destruct form fields from contact variable in useState hook
-  const { name, email, phone, type } = contact;
+  // Function to update component level state with form values
+  const onChange =(e)=>{
+    setContact({...contact, [e.target.name]:e.target.value })
+  };
 
   // Function to update global Application state with form values
   const onSubmit =(e)=>{
@@ -50,10 +56,10 @@ const ContactForm = () => {
     })
   };
 
-  // Function to update component level state with form values
-  const onChange =(e)=>{
-    setContact({...contact, [e.target.name]:e.target.value })
-  };
+  // Function clear all form fields + set "current" = null
+  const clearAll = () =>{
+    clearCurrent();
+  }
 
   return (
     <form onSubmit={onSubmit}>
@@ -89,7 +95,7 @@ const ContactForm = () => {
           value='personal'
           checked={type === 'personal'}
           onChange={onChange}
-        /> Personal{''}
+        /> Personal {''}
         <input
           type='radio'
           name='type'
@@ -103,9 +109,19 @@ const ContactForm = () => {
               className='btn btn-primary btn-block'
               type='submit'
               // Button will conditionally render text based on state "current" value
-              value={ current ? 'Edit Contact' : 'Add Contact'}
+              value={ current ? 'Update Contact' : 'Add Contact'}
           />
         </div>
+          {/* Form will conditionally render a clear button based on state "current" value  */}
+          { current &&
+            <div>
+              <button
+                className='btn btn-light btn-block'
+                onClick={clearAll}
+              >
+                Clear
+              </button>
+            </div>}
     </form>
   )
 }

@@ -67,7 +67,7 @@ const ContactState = (props) => {
 
     // FUNCTION - will CLEAR a contact as the "current" key value and set it back to null
     const clearCurrent = () =>{
-      dispatch({ type: SET_CURRENT })
+      dispatch({ type: CLEAR_CURRENT })
     };
 
     // UPDATE the contact,
