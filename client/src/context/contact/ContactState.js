@@ -40,7 +40,9 @@ const ContactState = (props) => {
         phone: '333-333-3333',
         type: 'professional'
       }
-    ]
+    ],
+    // Will serve as a space to hold contacts made in UI
+    current: null
   };
 
   // Initialize useReducer hook to access contacts state values
@@ -58,10 +60,18 @@ const ContactState = (props) => {
       dispatch({ type: DELETE_CONTACT, payload: id })
     };
 
-    // SET the current contact,
+    // FUNCTION - will SET a contact as the value of the "current" state key for editing
+    const setCurrent = contact =>{
+      dispatch({ type: SET_CURRENT, payload: contact })
+    };
+
+    // FUNCTION - will CLEAR a contact as the "current" key value and set it back to null
+    const clearCurrent = () =>{
+      dispatch({ type: SET_CURRENT })
+    };
+
     // UPDATE the contact,
     // FILTER contacts
-    // CLEAR the filter
 
     // Return contact context provider element
     return (
@@ -69,8 +79,11 @@ const ContactState = (props) => {
         // Set contact state & actions for access in app components
         value={{
           contacts: state.contacts,
+          current: state.current,
           addContact,
-          deleteContact
+          deleteContact,
+          setCurrent,
+          clearCurrent
         }}
         >
           {props.children}

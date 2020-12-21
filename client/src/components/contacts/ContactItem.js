@@ -11,14 +11,17 @@ const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext)
 
   // Deconstruct deleteContact action from contactContext
-  const { deleteContact } = contactContext
+  const { deleteContact, setCurrent, clearCurrent } = contactContext
 
   // Deconstruct contact information from props
   const { id, name, email, phone, type } = contact;
 
   // Function will delete user contact from list
   const onDelete = () =>{
+    // delete selected contact by id number
     deleteContact(id);
+    // reset current key to null
+    clearCurrent();
   };
 
   return (
@@ -43,7 +46,7 @@ const ContactItem = ({ contact }) => {
         </li>)}
       </ul>
       <p>
-        <button className='btn btn-dark btn-sm'> Edit </button>
+        <button className='btn btn-dark btn-sm' onClick={()=> setCurrent(contact)}> Edit </button>
         <button className='btn btn-danger btn-sm' onClick={onDelete}> Delete </button>
       </p>
     </div>
