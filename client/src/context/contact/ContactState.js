@@ -71,6 +71,10 @@ const ContactState = (props) => {
     };
 
     // UPDATE the contact,
+    const updateContact = contact =>{
+      dispatch({ type: UPDATE_CONTACT, payload: contact })
+    };
+
     // FILTER contacts
 
     // Return contact context provider element
@@ -83,7 +87,8 @@ const ContactState = (props) => {
           addContact,
           deleteContact,
           setCurrent,
-          clearCurrent
+          clearCurrent,
+          updateContact
         }}
         >
           {props.children}

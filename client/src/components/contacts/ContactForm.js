@@ -10,19 +10,7 @@ const ContactForm = () => {
   const contactContext = useContext(ContactContext);
 
   // Destructor functions from contactContext
-  const { addContact, current, clearCurrent } = contactContext;
-
-  // Initialize useState hook and variables
-   // Setting a form in the useState() hook allows us not to have to create hook for each form field
-  const [contact, setContact] = useState({
-    name:'',
-    email:'',
-    phone:'',
-    type:'personal',
-  })
-
-  // Destruct form fields from contact variable in useState hook
-  const { name, email, phone, type } = contact;
+  const { addContact, updateContact, clearCurrent, current } = contactContext;
 
   // React hook will automatically load contact information to form based on "current" value
   useEffect(()=>{
@@ -39,6 +27,18 @@ const ContactForm = () => {
     }
   }, [contactContext, current]);
 
+  // Initialize useState hook and variables
+   // Setting a form in the useState() hook allows us not to have to create hook for each form field
+   const [contact, setContact] = useState({
+    name:'',
+    email:'',
+    phone:'',
+    type:'personal',
+  });
+
+  // Destruct form fields from contact variable in useState hook
+  const { name, email, phone, type } = contact;
+
   // Function to update component level state with form values
   const onChange =(e)=>{
     setContact({...contact, [e.target.name]:e.target.value })
@@ -47,13 +47,13 @@ const ContactForm = () => {
   // Function to update global Application state with form values
   const onSubmit =(e)=>{
     e.preventDefault();
-    addContact(contact);
-    setContact({
-      name:'',
-      email:'',
-      phone:'',
-      type:'personal',
-    })
+    if( current === null){
+      addContact(contact);
+    }
+    else {
+      updateContact(contact);
+    }
+    clearAll();
   };
 
   // Function clear all form fields + set "current" = null
