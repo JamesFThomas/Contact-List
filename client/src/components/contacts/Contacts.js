@@ -22,14 +22,21 @@ export const Contacts = () => {
 
   return (
     <Fragment>
+      <TransitionGroup>
+
       {/* Conditionally render filtered contacts array based on contact state "filtered" key value */}
       {filtered !== null
         ? filtered.map(contact => (
-          < ContactItem key={contact.id} contact={contact}/>
+          <CSSTransition key={contact.id} timeout={700} classNames='item'>
+            < ContactItem contact={contact}/>
+          </CSSTransition>
           ))
-        : contacts.map((contact) => (
-          < ContactItem key={contact.id} contact={contact}/>
-        ))}
+          : contacts.map((contact) => (
+            <CSSTransition key={contact.id} timeout={700} classNames='item'>
+              < ContactItem contact={contact}/>
+            </CSSTransition>
+          ))}
+      </TransitionGroup>
     </Fragment>
   )
 }
