@@ -1,5 +1,5 @@
 // Import React package & hooks
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 // Import contact conetext tp access contact state globally
 import ContactContext from '../../context/contact/contactContext';
 
@@ -8,6 +8,23 @@ const ContactForm = () => {
   // Initialize contact context to access contact state
   const contactContext = useContext(ContactContext);
 
+  // Destructor functions from contactContext
+  const { addContact, current } = contactContext;
+
+  // React hook will automatically load contact information to form based on "current" value
+  useEffect(()=>{
+    if(current !== null){
+      setContact(current);
+    }
+    else {
+      setContact({
+        name:'',
+        email:'',
+        phone:'',
+        type:'personal',
+      });
+    }
+  }, [contactContext, current]);
 
   // Initialize useState hook and variables
    // Setting a form in the useState() hook allows us not to have to create hook for each form field
@@ -24,7 +41,7 @@ const ContactForm = () => {
   // Function to update global Application state with form values
   const onSubmit =(e)=>{
     e.preventDefault();
-    contactContext.addContact(contact);
+    addContact(contact);
     setContact({
       name:'',
       email:'',
