@@ -57,7 +57,10 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h2 className='text-primary'>Add Contact</h2>
+      <h2 className='text-primary'>
+        {/* Form will conditionally render title based on state "current" value */}
+        { current ? 'Edit Contact' : 'Add Contact'}
+      </h2>
       <input
         type='text'
         placeholder='name'
@@ -96,7 +99,12 @@ const ContactForm = () => {
           />
           {''} Professional
         <div>
-          <input className='btn btn-primary btn-block' type='submit' value='Add Contact' />
+          <input
+              className='btn btn-primary btn-block'
+              type='submit'
+              // Button will conditionally render text based on state "current" value
+              value={ current ? 'Edit Contact' : 'Add Contact'}
+          />
         </div>
     </form>
   )
