@@ -3,7 +3,7 @@ import React, { useReducer } from 'react';
 // Import auth context instance
 import AuthContext from './authContext';
 // Import auth context reduce function to update state values
-import AuthReducer from './authReducer';
+import authReducer from './authReducer';
 // Import variables from types.js
 import {
   REGISTER_SUCCESS,
@@ -32,7 +32,7 @@ const AuthState = (props) => {
   };
 
   // Initialize useReducer hook to access contacts state values
-  const [state, dispatch] = useReducer(AuthReducer, initialState);
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
                                             // Auth State Actions
 

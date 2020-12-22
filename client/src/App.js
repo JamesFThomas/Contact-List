@@ -12,10 +12,14 @@ import About from './components/pages/About';
 import Register from './components/auth/Register';
 // Import Login page component
 import Login from './components/auth/Login';
+// Import Alert component
+import Alerts from './components/layout/Alerts';
 // Import contact state provider object
 import ContactState from './context/contact/ContactState';
 // Import auth state provider object
 import AuthState from './context/auth/AuthState';
+// Import alert state provider object
+import AlertState from './context/alert/AlertState';
 // Import CSS stylesheet for UI design
 import './App.css';
 
@@ -24,19 +28,22 @@ const App = () =>{
   return (
     <AuthState>
       <ContactState>
-        <Router>
-          <Fragment>
-            <Navbar />
-              <div className='container'>
-                <Switch>
-                  <Route exact path='/' component={Home} />
-                  <Route exact path='/about' component={About} />
-                  <Route exact path='/register' component={Register} />
-                  <Route exact path='/login' component={Login} />
-                </Switch>
-              </div>
-          </Fragment>
-        </Router>
+        <AlertState>
+          <Router>
+            <Fragment>
+              <Navbar />
+                <div className='container'>
+                  <Alerts />
+                  <Switch>
+                    <Route exact path='/' component={Home} />
+                    <Route exact path='/about' component={About} />
+                    <Route exact path='/register' component={Register} />
+                    <Route exact path='/login' component={Login} />
+                  </Switch>
+                </div>
+            </Fragment>
+          </Router>
+        </AlertState>
       </ContactState>
     </AuthState>
   );
