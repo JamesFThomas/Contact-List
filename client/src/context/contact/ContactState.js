@@ -18,6 +18,7 @@ import {
 } from '../types';
 
 const ContactState = (props) => {
+  // Create initial attributes/values for the contact state object
   const initialState = {
     contacts: [
       {
