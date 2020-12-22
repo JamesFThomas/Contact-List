@@ -2,7 +2,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 // Import contact conetext tp access contact state globally
 import ContactContext from '../../context/contact/contactContext';
-import { CLEAR_CURRENT } from '../../context/types';
 
 
 const ContactForm = () => {
