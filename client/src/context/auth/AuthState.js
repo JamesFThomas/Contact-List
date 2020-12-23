@@ -6,6 +6,8 @@ import axios from 'axios';
 import AuthContext from './authContext';
 // Import auth context reduce function to update state values
 import authReducer from './authReducer';
+// Import setAuthToken function
+import setAuthToken from '../../utils/setAuthToken'
 // Import variables from types.js
 import {
   REGISTER_SUCCESS,
@@ -39,7 +41,28 @@ const AuthState = (props) => {
                                             // Auth State Actions
 
     // Load User - checks if a user is logged in
-    const loadUser = () =>{ console.log('load user')}
+    const loadUser = async () => {
+      // Check for presence of web token
+      if(localStorage.token){
+        // If present - set token to global header
+        setAuthToken(localStorage.token);
+      }
+
+      // Axios request to backend for user data
+      try {
+        // create variable set to return value of user auth attempt
+        const res = await axios.get('api/auth');
+
+        // If successful dispatch returned user data to reducer
+        dispatch({
+          type: USER_LOADED,
+          payload: res.data
+        })
+      } catch (error) {
+        // If fail dispatch error data to reducer
+        dispatch({ type: AUTH_ERROR  });
+      }
+    };
 
     // Register User - sign user up and return token
     const registerUser = async (formData) => {
@@ -54,13 +77,15 @@ const AuthState = (props) => {
         // Create variable set to response from POST request
         const res = await axios.post('api/users', formData, config);
 
-        // Set dispatch type and payload to reducer if register successful
-            // response will be web token
+        // If register successful
+            // Set dispatch type and payload to reducer
         dispatch({
           type:REGISTER_SUCCESS,
-          payload: res.data
+          payload: res.data      // (web token) for authentication
         });
 
+        // Call load user
+        loadUser();
 
       } catch (error) {
         // If register is a Failure

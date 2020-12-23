@@ -6,7 +6,7 @@ import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 
 
-const Register = () => {
+const Register = ( props ) => {
   // Initialize context to access alert state actions & variables
   const alertContext = useContext(AlertContext);
   // Initialize context to access auth state actions & variables
@@ -14,15 +14,21 @@ const Register = () => {
 
   // Destructor actions and values from context objects
   const { setAlert } = alertContext;
-  const { registerUser, clearErrors, error } = authContext;
+  const { registerUser, clearErrors, isAuthenticated, error } = authContext;
 
-  // Initialize useEffect hook to check for already existing data
+  // Initialize useEffect hook to check for set data conditions
   useEffect(()=> {
+    if(isAuthenticated){
+      // If user is authenticated redirect to home page
+      props.history.push('/')
+    }
     if( error === 'User already in database'){
         setAlert(error, 'danger');
         clearErrors();
     };
-  },[ error ])
+
+    //eslint-disable-next-line
+  },[ error, isAuthenticated, props.history ])
 
   // Initialize useSate hook and variables for account registration form
   const [user, setUser] = useState({
