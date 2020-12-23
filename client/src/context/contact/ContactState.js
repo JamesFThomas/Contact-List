@@ -76,12 +76,21 @@ const ContactState = (props) => {
         dispatch({ type: CONTACT_ERROR, payload: error.response.msg  })
       }
 
-      // contact.id = uuid();
     };
 
     // DELETE a contact,
-    const deleteContact = id =>{
-      dispatch({ type: DELETE_CONTACT, payload: id })
+    const deleteContact = async id =>{
+      try {
+        // make delete request to API
+        await axios.delete(`/api/contacts/${id}`)
+
+        // If successful dispatch user id to reducer for state update
+        dispatch({ type: DELETE_CONTACT, payload: id })
+
+      } catch (error) {
+        // If unsuccessful dispatch error message to reducer
+        dispatch({ type: CONTACT_ERROR, payload: error.response.msg  })
+      }
     };
 
     // Clear contacts

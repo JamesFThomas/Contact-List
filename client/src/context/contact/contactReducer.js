@@ -24,7 +24,7 @@ export default (state, action) =>{
     case ADD_CONTACT:
       return {
         ...state,
-        contacts: [...state.contacts, action.payload],
+        contacts: [action.payload, ...state.contacts],
         loading: false
       };
     case UPDATE_CONTACT:
@@ -40,7 +40,7 @@ export default (state, action) =>{
         ...state,
         contacts: state.contacts.filter(contact=>
           // return the contact information that does NOT matches the given id
-          contact.id !== action.payload
+          contact._id !== action.payload
           ),
           loading: false
       };
