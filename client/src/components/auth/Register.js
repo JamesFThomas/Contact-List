@@ -2,16 +2,21 @@
 import React, { useState, useContext } from 'react'
 // Import alert context
 import AlertContext from '../../context/alert/alertContext';
+// Import auth context
+import AuthContext from '../../context/auth/authContext';
 
 
 const Register = () => {
   // Initialize context to access alert state actions & variables
   const alertContext = useContext(AlertContext);
+  // Initialize context to access auth state actions & variables
+  const authContext = useContext(AuthContext);
 
-  // Destructor alert actions and values from context object
+  // Destructor actions and values from context objects
   const { setAlert } = alertContext;
+  const { registerUser } = authContext;
 
-  // Initialize useSate hook and variables for register form
+  // Initialize useSate hook and variables for account registration form
   const [user, setUser] = useState({
       name: '',
       email: '',
@@ -29,6 +34,7 @@ const Register = () => {
 
   // Function - to capture and text field values
   const onSubmit = (e) => {
+    // prevent input fields from reverting to initial state
     e.preventDefault();
     // return alerts based on form field data
     if( name === '' || email === '' || password === '' ){
@@ -40,8 +46,12 @@ const Register = () => {
       setAlert('Passwords do not match', 'danger')
     }
     else{
-      // return success message when form submitted
-      console.log('Register submit');
+      // If all form fields completed submit data for registration
+      registerUser({
+        name,
+        email,
+        password
+      })
     }
   }
 
@@ -59,7 +69,7 @@ const Register = () => {
             name='name'
             value={name}
             onChange={onChange}
-            
+
           />
         </div>
         <div className='form-group'>
@@ -69,7 +79,7 @@ const Register = () => {
             name='email'
             value={email}
             onChange={onChange}
-            
+
           />
         </div>
         <div className='form-group'>
@@ -79,7 +89,7 @@ const Register = () => {
             name='password'
             value={password}
             onChange={onChange}
-            
+
           />
         </div>
         <div className='form-group'>
@@ -89,7 +99,7 @@ const Register = () => {
             name='password2'
             value={password2}
             onChange={onChange}
-            
+
           />
         </div>
         <input

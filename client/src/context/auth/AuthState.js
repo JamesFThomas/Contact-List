@@ -1,5 +1,7 @@
 // Import React package with useReducer hook
 import React, { useReducer } from 'react';
+// Import axios package to make web requests
+import axios from 'axios';
 // Import auth context instance
 import AuthContext from './authContext';
 // Import auth context reduce function to update state values
@@ -37,19 +39,46 @@ const AuthState = (props) => {
                                             // Auth State Actions
 
     // Load User - checks if a user is logged in
-    const loadUser = () =>{}
+    const loadUser = () =>{ console.log('load user')}
 
     // Register User - sign user up and return token
-    const registerUser = () =>{}
+    const registerUser = async (formData) => {
+      // create config object to specify content type in post request
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+
+      try {
+        // Create variable set to response from POST request
+        const res = await axios.post('api/users', formData, config);
+
+        // Set dispatch type and payload to reducer if register successful
+            // response will be web token
+        dispatch({
+          type:REGISTER_SUCCESS,
+          payload: res.data
+        });
+
+
+      } catch (error) {
+        // If register is a Failure
+        dispatch({
+          type:REGISTER_FAIL,
+          payload: error.response.data.msg
+        });
+      }
+    }
 
     // Login User - login user in and receive token
-    const loginUser = () =>{}
+    const loginUser = () =>{ console.log('login user')}
 
     // Logout - will destroy user token
-    const logoutUser = () =>{}
+    const logoutUser = () =>{ console.log('logout user')}
 
     // Clear Errors- will clear any returned errors
-    const clearErrors = () =>{}
+    const clearErrors = () =>{ console.log('clear errors')}
 
     // Return auth context provider element
     return (
