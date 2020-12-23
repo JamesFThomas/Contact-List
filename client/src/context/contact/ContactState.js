@@ -3,7 +3,7 @@ import React, { useReducer } from 'react';
 // Import axios
 import axios from 'axios'
 // Import uuid package to create custom ids
-import {v4 as uuid} from 'uuid';
+// import {v4 as uuid} from 'uuid';
 // Import contact context instance
 import ContactContext from './contactContext';
 // Import contact context reduce function to update state values
@@ -54,7 +54,6 @@ const ContactState = (props) => {
       }
    };
 
-
     // ADD a contact
     const addContact = async contact =>{
       // Config request headers
@@ -78,7 +77,30 @@ const ContactState = (props) => {
 
     };
 
-    // DELETE a contact,
+    // UPDATE the current user contact
+    const updateContact = async contact =>{
+      // Config request headers
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+
+      try {
+        // Create variable set to return value of adding contact to database
+        const res = await axios.put(`/api/contacts/${contact._id}`, contact, config)
+
+        // If successful dispatch user data to reducer for state update
+        dispatch({ type: UPDATE_CONTACT, payload: res.data })
+
+      } catch (error) {
+        // If unsuccessful dispatch error message to reducer
+        dispatch({ type: CONTACT_ERROR, payload: error.response.msg  })
+      }
+
+    };
+
+    // DELETE the current user contact
     const deleteContact = async id =>{
       try {
         // make delete request to API
@@ -91,6 +113,7 @@ const ContactState = (props) => {
         // If unsuccessful dispatch error message to reducer
         dispatch({ type: CONTACT_ERROR, payload: error.response.msg  })
       }
+      // dispatch({ type: UPDATE_CONTACT, payload: contact })
     };
 
     // Clear contacts
@@ -108,12 +131,7 @@ const ContactState = (props) => {
       dispatch({ type: CLEAR_CURRENT })
     };
 
-    // UPDATE the contact,
-    const updateContact = contact =>{
-      dispatch({ type: UPDATE_CONTACT, payload: contact })
-    };
-
-    // FILTER contacts
+    // Function will search and return a filtered list of contacts based on given parameters
     const filterContacts = text =>{
       dispatch({ type: FILTER_CONTACTS, payload: text })
     };

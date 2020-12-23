@@ -16,8 +16,8 @@ const ContactFilter = () => {
     if(filtered === null){
       text.current.value = '';
     }
-    else{}
-  }, [ ]);
+    // else{}
+  }, [ filtered ]);
 
   // Function to filter contacts displayed by name or email
   const onChange = e => {
