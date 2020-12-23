@@ -17,14 +17,16 @@ import {
   UPDATE_CONTACT,
   CLEAR_FILTER,
   FILTER_CONTACTS,
-  CONTACT_ERROR
+  CONTACT_ERROR,
+  GET_CONTACTS,
+  CLEAR_CONTACTS
 } from '../types';
 
 const ContactState = (props) => {
   // Create initial attributes/values for the contact state object
   const initialState = {
     // Will serve as a space to hold contacts made in UI
-    contacts: [],
+    contacts: null,
     // state attribute to hold user data for current application action i.e. updating, deleting
     current: null,
     // State attribute to hold returned list of contacts filtered by search params
@@ -37,6 +39,21 @@ const ContactState = (props) => {
   const [state, dispatch] = useReducer(ContactReducer, initialState);
 
                                             // Contact State Actions
+    // GET user contacts
+    const getContacts = async () =>{
+      try {
+        // Create variable set to return value of adding contact to database
+        const res = await axios.get('/api/contacts')
+
+        // If successful dispatch user data to reducer for state update
+        dispatch({ type: GET_CONTACTS, payload: res.data })
+
+      } catch (error) {
+        // If unsuccessful dispatch error message to reducer
+        dispatch({ type: CONTACT_ERROR, payload: error.response.msg  })
+      }
+   };
+
 
     // ADD a contact
     const addContact = async contact =>{
@@ -61,9 +78,15 @@ const ContactState = (props) => {
 
       // contact.id = uuid();
     };
+
     // DELETE a contact,
     const deleteContact = id =>{
       dispatch({ type: DELETE_CONTACT, payload: id })
+    };
+
+    // Clear contacts
+    const clearContacts = () =>{
+      dispatch({ type: CLEAR_CONTACTS })
     };
 
     // FUNCTION - will SET a contact as the value of the "current" state key for editing
@@ -101,12 +124,14 @@ const ContactState = (props) => {
           filtered: state.filtered,
           error: state.error,
           addContact,
+          getContacts,
           deleteContact,
           setCurrent,
           clearCurrent,
           updateContact,
           filterContacts,
-          clearFilter
+          clearFilter,
+          clearContacts
         }}
         >
           {props.children}

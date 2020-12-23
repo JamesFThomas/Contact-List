@@ -6,18 +6,25 @@ import PropTypes from "prop-types";
 import {Link} from 'react-router-dom'
 // Import auth context object
 import AuthContext from '../../context/auth/authContext';
+// Import contact context object
+import ContactContext from '../../context/contact/contactContext';
 
 
 const Navbar = ({ title, icon }) => {
   // Initialize context object in component
   const authContext = useContext(AuthContext);
+  const contactContext = useContext(ContactContext);
 
   // Destructor actions/ variable from context state object
   const { isAuthenticated, logoutUser, user} = authContext;
+  const { clearContacts } = contactContext;
 
   // Function - will be called when user is logged out
   const onLogout = () => {
+    // end user session
     logoutUser();
+    // clear all contacts
+    clearContacts();
   }
 
   // Split visible links based on user authentication
