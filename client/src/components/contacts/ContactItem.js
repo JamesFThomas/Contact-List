@@ -14,12 +14,12 @@ const ContactItem = ({ contact }) => {
   const { deleteContact, setCurrent, clearCurrent } = contactContext
 
   // Deconstruct contact information from props
-  const { id, name, email, phone, type } = contact;
+  const { _id, name, email, phone, type } = contact;
 
   // Function will delete user contact from list
   const onDelete = () =>{
     // delete selected contact by id number
-    deleteContact(id);
+    deleteContact(_id);
     // reset current key to null
     clearCurrent();
   };
