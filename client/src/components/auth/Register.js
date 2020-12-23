@@ -1,5 +1,5 @@
 // Import React package and hooks
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 // Import alert context
 import AlertContext from '../../context/alert/alertContext';
 // Import auth context
@@ -14,7 +14,15 @@ const Register = () => {
 
   // Destructor actions and values from context objects
   const { setAlert } = alertContext;
-  const { registerUser } = authContext;
+  const { registerUser, clearErrors, error } = authContext;
+
+  // Initialize useEffect hook to check for already existing data
+  useEffect(()=> {
+    if( error === 'User already in database'){
+        setAlert(error, 'danger');
+        clearErrors();
+    };
+  },[ error ])
 
   // Initialize useSate hook and variables for account registration form
   const [user, setUser] = useState({
@@ -59,7 +67,7 @@ const Register = () => {
   return (
     <div className='form-container'>
       <h1>
-        Account <span className='text-primary'>Register User</span>
+        Account <span className='text-primary'>Registration</span>
       </h1>
       <form onSubmit={onSubmit}>
         <div className='form-group'>

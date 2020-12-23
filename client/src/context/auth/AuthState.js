@@ -78,7 +78,12 @@ const AuthState = (props) => {
     const logoutUser = () =>{ console.log('logout user')}
 
     // Clear Errors- will clear any returned errors
-    const clearErrors = () =>{ console.log('clear errors')}
+    const clearErrors = () =>{
+      dispatch(
+        // dispatch object to reducer with type indicating to clear errors
+        { type: CLEAR_ERRORS }
+      )
+    };
 
     // Return auth context provider element
     return (
