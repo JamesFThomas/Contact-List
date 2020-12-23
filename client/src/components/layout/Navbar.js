@@ -15,12 +15,17 @@ const Navbar = ({ title, icon }) => {
   // Destructor actions/ variable from context state object
   const { isAuthenticated, logoutUser, user} = authContext;
 
+  // Function - will be called when user is logged out
+  const onLogout = () => {
+    logoutUser();
+  }
+
   // Split visible links based on user authentication
   const authLinks = (
     <Fragment>
       <li> Hello { user && user.name}</li>
       <li>
-        <a href='#!'>
+        <a onClick={onLogout} href='#!'>
           <i className='fas fa-sign-out-alt'></i> <span className='hide-sm'>Logout</span>
         </a>
       </li>

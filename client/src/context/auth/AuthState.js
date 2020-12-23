@@ -127,7 +127,12 @@ const AuthState = (props) => {
       }}
 
     // Logout - will destroy user token
-    const logoutUser = () =>{ console.log('logout user')}
+    const logoutUser = () => {
+      dispatch(
+        // dispatch object to reducer with type indicating to log user out
+        { type:LOGOUT }
+      );
+    };
 
     // Clear Errors- will clear any returned errors
     const clearErrors = () =>{
