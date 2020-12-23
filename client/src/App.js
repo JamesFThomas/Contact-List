@@ -20,8 +20,16 @@ import ContactState from './context/contact/ContactState';
 import AuthState from './context/auth/AuthState';
 // Import alert state provider object
 import AlertState from './context/alert/AlertState';
+//Import setAuthToken function
+import setAuthToken from './utils/setAuthToken'
 // Import CSS stylesheet for UI design
 import './App.css';
+
+// Check for presence of web token
+if(localStorage.token){
+  // If present - set token to global header
+  setAuthToken(localStorage.token);
+}
 
 // Create Return Main application component/ origin point
 const App = () =>{
