@@ -97,10 +97,42 @@ const AuthState = (props) => {
     }
 
     // Login User - login user in and receive token
-    const loginUser = () =>{ console.log('login user')}
+    const loginUser = async (formData) =>{ // create config object to specify content type in post request
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+
+      try {
+        // Create variable set to response from POST request
+        const res = await axios.post('api/auth', formData, config);
+
+        // If register successful
+            // Set dispatch type and payload to reducer
+        dispatch({
+          type:LOGIN_SUCCESS,
+          payload: res.data      // (web token) for authentication
+        });
+
+        // Call load user
+        loadUser();
+
+      } catch (error) {
+        // If register is a Failure
+        dispatch({
+          type:LOGIN_FAIL,
+          payload: error.response.data.msg
+        });
+      }}
 
     // Logout - will destroy user token
-    const logoutUser = () =>{ console.log('logout user')}
+    const logoutUser = () => {
+      dispatch(
+        // dispatch object to reducer with type indicating to log user out
+        { type:LOGOUT }
+      );
+    };
 
     // Clear Errors- will clear any returned errors
     const clearErrors = () =>{
