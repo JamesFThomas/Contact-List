@@ -16,11 +16,6 @@ app.use(express.json({ extended:false }));
 
                                              // Routes
 
-// Home   -- comment out before go into production mode
-// app.get('/', (req, res)=>{
-//   res.json({ msg:'Welcome to the ContactList API...' })}
-// );
-
 // Routers
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
