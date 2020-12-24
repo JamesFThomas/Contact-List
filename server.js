@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 // import connectDB function
 const connectDB = require('./config/db')
+//import path package for file paths to static folders
+const path = require('path');
 
 // invoke conncetDB() to create connection to mongoDB
 connectDB();
@@ -12,7 +14,7 @@ connectDB();
 app.use(express.json({ extended:false }));
 
 
-                                                                                   // Routes
+                                             // Routes
 
 // Home
 app.get('/', (req, res)=>{
@@ -23,6 +25,16 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/contacts', require('./routes/contacts'));
 
+// Check Environment Type - if production serve different different build of application
+if (process.env.NODE_ENV === 'production'){
+  // Target static folder to server in production
+  app.use(express.static('client/build'));
+
+  // Use this route to serve build in production
+  app.get('*', (req, res)=> {
+    res.sendFile(path.resolve(_dirname, 'client', 'build', 'index.html'))
+  })
+};
 
 // create variable set to PORT value for dev & production
 const PORT = process.env.PORT || 5000;
