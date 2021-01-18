@@ -1,4 +1,4 @@
-![Alt text](Contact-keeper-image.png?raw=true "Contact Keeper")
+![Alt text](client/src/assets/Contact-keeper-image.png?raw=true "Contact Keeper")
 
 
 # Contact Keeper
